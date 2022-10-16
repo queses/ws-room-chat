@@ -1,0 +1,198 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif;
+    margin: 0;
+}
+
+#app {
+    margin-left: 8%;
+    margin-right: 8%;
+    height: 100vh;
+    border-left: 2px solid #eee;
+    border-right: 2px solid #eee;
+}
+
+#sidebar {
+    width: 26%;
+    height: 100%;
+    border-right: 2px solid #eee;
+    float: left;
+}
+
+#content {
+    height: 100%;
+    display: flex;
+}
+
+.button {
+    background-color: rgb(50, 173, 230);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    height: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color ease 0.3s;
+}
+
+.button:hover {
+    background-color: rgb(100, 210, 255);
+}
+
+.input {
+    border-radius: 4px;
+    height: 28px;
+    border: 1px solid #999;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 14px;
+}
+
+.sideUser-logout {
+    color: #666;
+}
+
+.username {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.username-welcome {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.sideUser {
+    padding: 8px 16px 16px 16px;
+    border-bottom: 2px solid #eee;
+}
+
+.sideUser-title {
+    margin-top: 0px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.sideUser-name {
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 2px;
+}
+
+.sideUser-online {
+    width: 8px;
+    height: 8px;
+    background-color: rgb(50, 173, 230);
+    display: inline-block;
+    border-radius: 100%;
+    margin-bottom: 1px;
+    margin-right: 2px;
+}
+
+.sideChats {
+    padding: 8px 0 8px 0;
+}
+
+.sideChats-title {
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-top: 0px;
+    color: #888;
+}
+
+.sideChats-chat {
+    padding-left: 16px;
+    padding-right: 16px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background-color ease 0.3s;
+}
+
+.sideChats-chat:nth-child(2n) {
+    background-color: #f5f5f5;
+}
+
+.sideChats-chat:hover {
+    background-color: #eee;
+}
+
+.sideChats-chatArrows {
+    color: #aaa;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.messages {
+    width: 100%;
+    max-height: 100%;
+    overflow: auto;
+}
+
+.messages-titleWrapper {
+    padding: 0 40px 0 32px;
+    border-bottom: 2px solid #eee;
+    background-color: white;
+    position: sticky;
+    top: 0;
+}
+
+.messages-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.messages-list {
+    padding: 16px 40px 0 32px;
+    min-height: calc(100% - 137px);
+}
+
+.messages-message {
+    margin-bottom: 16px;
+    background-color: #f5f5f5;
+    max-width: 400px;
+    border-radius: 8px;
+    padding: 4px 16px 8px 16px;
+}
+
+.messages-message_my {
+    margin-left: auto;
+    background-color: rgb(222 243 252);
+}
+
+.messages-messageUser {
+    font-weight: 500;
+}
+
+.messages-formWrapper {
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    border-top: 2px solid #eee;
+    padding: 16px 40px 16px 32px;
+}
+
+.messages-formWrapper form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.messages-formWrapper form .input {
+    width: 100%;
+}
+
+.messages-formWrapper form .button {
+    margin-left: 16px;
+}

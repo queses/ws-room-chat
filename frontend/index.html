@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+    <title>Chat App</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="./Api.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar">
+            <div id="side-user"></div>
+            <div id="side-chats"></div>
+        </div>
+        <div id="content"></div>
+    </div>
+</body>
+
+<script id="t-username" type="text/x-handlebars-template">
+    <div class='username'>
+        <div class='username-wrapper'>
+            <p class='username-welcome'>Welcome!</p>
+            <p class='username-text'>Enter your user name</p>
+
+            <form action='javascript:connect(userInput.value)'>
+                <input class='input' id='userInput' placeholder='Username' />
+                <button type='submit' class='button'>Connect</button>
+            </form>
+        </div>
+    </div>
+</script>
+
+<script id="t-sidebar" type="text/x-handlebars-template">
+    <div class='sideUser'>
+        <p class='sideUser-title'>Chatting as</p>
+        <p class='sideUser-name'>
+            <span class='sideUser-online'></span>
+            {{this.userId}}
+        </p>
+        <a class='sideUser-logout' href='#' onclick='disconnect()'>Log out</a>
+    </div>
+
+    <div class='sideChats'>
+        <p class='sideChats-title'>Chats</p>
+        {{#each chats}}
+            <div class='sideChats-chat' onclick="openChat('{{this.id}}')">
+                <span class='sideChats-chatTitle'>{{this.id}}</span>
+                <span class='sideChats-chatArrows'>»</span>
+            </div>
+        {{/each}}
+    </div>
+</script>
+
+<script id="t-messages" type="text/x-handlebars-template">
+    <div class='messages'>
+        <div class='messages-titleWrapper'>
+            <p class='messages-title'>{{chatId}}</p>
+        </div>
+
+        <div class='messages-list'>
+            {{#each messages}}
+                <div class='messages-message {{#if isMy}}messages-message_my{{/if}}'>
+                    <div class='messages-messageUser'>{{this.userId}}</div>
+                    <div class='messages-messageText'>{{this.text}}</div>
+                </div>
+            {{/each}}
+        </div>
+
+        <div class='messages-formWrapper'>
+            <form action='javascript:createMessage("{{chatId}}", messageInput.value)'>
+                <input class='input' id='messageInput' placeholder='Message' autocomplete='off' />
+                <button type='submit' class='button'>Send</button>
+            </form>
+        </div>
+    </div>
+</script>
+
+<script>
+    class Render {
+        _templates = {
+            username: Handlebars.compile(document.getElementById('t-username').innerHTML),
+            sidebar: Handlebars.compile(document.getElementById('t-sidebar').innerHTML),
+            messages: Handlebars.compile(document.getElementById('t-messages').innerHTML)
+        }
+
+        chats(res, userId) {
+            document.getElementById('content').innerHTML = ''
+            document.getElementById('sidebar').hidden = false
+            document.getElementById('sidebar').innerHTML = this._templates.sidebar({ userId, chats: res.chats })
+        }
+
+        messages(res, userId) {
+            const context = {
+                chatId: res.chatId,
+                messages: res.messages.map(item => {
+                    const isMy = item.userId === userId
+                    return Object.assign({}, item, { isMy })
+                })
+            }
+
+            document.getElementById('content').innerHTML = this._templates.messages(context)
+        }
+
+        reset() {
+            document.getElementById('sidebar').hidden = true
+            document.getElementById('sidebar').innerHTML = ''
+
+            document.getElementById('content').innerHTML = this._templates.username()
+        }
+    }
+
+    const render = new Render()
+
+    window.onload = () => {
+        render.reset()
+    }
+
+    const api = new Api(render)
+
+    const connect = api.connect.bind(api)
+    const disconnect = api.disconnect.bind(api)
+    const openChat = api.openChat.bind(api)
+    const createMessage = api.createMessage.bind(api)
+</script>
