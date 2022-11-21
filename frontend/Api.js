@@ -1,10 +1,10 @@
 class Api {
-    _port = '8091'
+    _port = '8090'
     _webSocket = null
     _listenChatId = null
 
     constructor(render) {
-        this.render = render
+        this._render = render
     }
 
     connect(userId) {
@@ -24,10 +24,10 @@ class Api {
 
             switch (res.type) {
                 case 'listChats':
-                    this.render.chats(res, userId)
+                    this._render.chats(res, userId)
                     break
                 case 'listMessages':
-                    this.render.messages(res, userId)
+                    this._render.messages(res, userId)
                     break
             }
         }
@@ -44,7 +44,7 @@ class Api {
 
         this._webSocket.close()
 
-        this.template.reset()
+        this._render.reset()
     }
 
     openChat(chatId) {

@@ -58,16 +58,16 @@
 
         <div class='messages-list'>
             {{#each messages}}
-                <div class='messages-message {{#if isMy}}messages-message_my{{/if}}'>
-                    <div class='messages-messageUser'>{{this.userId}}</div>
-                    <div class='messages-messageText'>{{this.text}}</div>
-                </div>
+            <div class='messages-message {{#if isMy}}messages-message_my{{/if}}'>
+                <div class='messages-messageUser'>{{this.userId}}</div>
+                <div class='messages-messageText'>{{this.text}}</div>
+            </div>
             {{/each}}
         </div>
 
         <div class='messages-formWrapper'>
             <form action='javascript:createMessage("{{chatId}}", messageInput.value)'>
-                <input class='input' id='messageInput' placeholder='Message' autocomplete='off' />
+                <input class='input' id='messageInput' placeholder='Message' autocomplete='off'/>
                 <button type='submit' class='button'>Send</button>
             </form>
         </div>
