@@ -2,24 +2,22 @@ import http from 'http'
 import httpProxy from 'http-proxy'
 import { fork } from 'child_process'
 import { Log } from './lib'
-import { DbChat } from './types'
 import { Repo } from './repo'
-import { PubSub } from './pubsub'
 
 const masterPort = '8090'
-// const ports = ['8091', '8092']
-const ports = ['8091']
+const ports = ['8091', '8092']
 
 async function run() {
-    const log = new Log(`M-${masterPort}`)
-    log.info(`Master is running; pid: ${process.pid}`)
+    const log = new Log(`P-${masterPort}`)
+    log.info(`Proxy is running; pid: ${process.pid}`)
 
+    // Run several instances on every port:
     ports.forEach(port => {
         fork('./dist/worker.js', [], { stdio: 'inherit', env: { PORT: port } })
     })
 
     const repo = await Repo.init(log)
-    await repo.migrate()
+    await repo.initData()
 
     const proxies = ports.map(port => httpProxy.createProxyServer({ target: `ws://localhost:${port}`, ws: true }))
 
@@ -41,11 +39,6 @@ async function run() {
     })
 
     log.info('Listening for requests')
-
-    // setInterval(() => {
-    //     const message = JSON.stringify({ type: 'time', time: new Date().toISOString() })
-    //     redis.publish('main', message)
-    // }, 2500)
 }
 
 run()

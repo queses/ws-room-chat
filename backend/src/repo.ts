@@ -1,6 +1,6 @@
 import { createClient, RedisClientType } from 'redis'
 import { Log } from './lib'
-import { DbChat, DbMessage } from './types'
+import { DbChat, DbMessage } from '../types'
 
 export class Repo {
     private static readonly redisPass = 'eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81'
@@ -18,7 +18,7 @@ export class Repo {
 
     private constructor(private readonly log: Log, private readonly redis: RedisClientType) {}
 
-    async migrate() {
+    async initData() {
         const chats: DbChat[] = [{ id: 'Chat1' }, { id: 'Chat2' }, { id: 'Chat3' }]
         const promises = chats.map(chat => {
             return this.redis.hSet('chats', chat.id, JSON.stringify(chat))

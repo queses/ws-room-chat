@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from 'redis'
-import { Log } from './lib'
+import { getRedisCredentials, Log } from './lib'
 
 export class PubSub {
     private static readonly redisPass = 'eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81'

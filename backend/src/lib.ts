@@ -1,3 +1,7 @@
+export function getRedisCredentials() {
+    return { password: 'eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81', url: 'localhost' }
+}
+
 export class Log {
     constructor(private readonly nodeId: string | number) {}
 
@@ -10,7 +14,6 @@ export class Log {
     }
 
     private log(type: 'info' | 'error', args: unknown[]) {
-        console.log(`> ${this.nodeId} [${type.toUpperCase()}]:`)
-        console[type](...args)
+        console[type](`> ${this.nodeId} [${type.toUpperCase()}]:\n`, ...args)
     }
 }
